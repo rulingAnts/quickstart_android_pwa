@@ -1,6 +1,8 @@
 # Comparative Wordlist Elicitation Tool (Android)
 
-This repository contains the source code for an Android application designed to assist linguists and fieldworkers in the systematic **elicitation and documentation of minority languages**.
+This repository contains the source code for an Android application designed to assist **trained linguists, fieldworkers, and community members** in the systematic **elicitation and documentation of minority languages**.
+
+The primary goal is to provide a tool simple enough for native speakers with limited technical and reading abilities to collect high-quality data.
 
 The tool facilitates the collection of:
 
@@ -14,7 +16,7 @@ The tool facilitates the collection of:
 
 **This project is currently in the conceptual and planning phase.** We are actively seeking **Android Developers** interested in linguistic fieldwork and open-source software to help build the initial application structure and core features. If you are looking for a high-impact project, please check the **Issues** tab to see initial feature discussions!
 
-## Core Features and Technical Scope
+## Core Features and Technical Scope (MVP Focus)
 
 The goal is to create a robust and reliable fieldwork companion. Initial development should focus on these key areas:
 
@@ -46,19 +48,95 @@ The goal is to create a robust and reliable fieldwork companion. Initial develop
 
 ### 2. Elicitation Interface
 
-- **Responsive UI:** Design a clean, high-contrast, and responsive interface optimized for tablet and mobile use in fieldwork environments (often low-light or outdoor settings).
+- **Responsive UI & Accessibility:** Design an **extremely simple, visually driven, and intuitive interface**. The UI must rely minimally on text labels, using large icons and high-contrast color schemes suitable for all users, including those with lower reading or technical abilities. Optimized for tablet and mobile use in fieldwork environments (often low-light or outdoor settings).
 
-- **Transcription Input:** Provide specialized input fields that are easy to use for entering and editing IPA symbols.
+- **Localization (i18n):** **Crucial Requirement:** All static in-app text (e.g., button labels, settings headers, instructions, consent text) must be fully localizable. The researcher must be able to configure and bundle the appropriate language of wider communication within the application package.
 
-- **Media Integration:** Display associated images or media files referenced in the wordlist data.
+- **Transcription Input:** The input field must be compatible with **IPA** characters.
+  
+  - **Encoding:** Ensure compatibility with **UTF-16** for Dekereke XML and **UTF-8** for LIFT XML export.
+  
+  - **Fonts:** The app should either include or clearly instruct the user to import OFL-licensed fonts compatible with IPA, such as **Charis SIL** (https://software.sil.org/charis/) or **Doulos SIL** (https://software.sil.org/doulos/). Developers should verify and include the necessary SIL Open Font License (OFL) documentation.
+  
+  - **Keyboard Integration:** Recommend that users install **Keyman** (https://play.google.com/store/apps/details?id=com.tavultesoft.kmapro) as their system-wide Android keyboard for efficient IPA entry.
 
-### 3. Audio Recording
+- **Media Integration:** Display associated images or media files referenced in the wordlist data, using large, clear display areas. **The XML parser and data model must support an optional `<Picture>` field/element, which links to researcher-supplied image files.**
 
-- **High-Quality Capture:** Implement reliable, easy-to-access functionality for recording and stopping audio directly linked to the current word entry.
+### 3. Ethical Data Collection and Consent (MVP Requirement)
+
+- **Goal:** Ensure clear, ethically sound, **informed consent** is obtained from the native speaker before any data collection begins. This is an absolute requirement for the MVP.
+
+- **Researcher Configuration:** The application must support highly customizable consent prompts, which must be configurable by the researcher (ideally via the App Bundling Wizard, or initial in-app setup). Two primary configurable modes are required:
+  
+  - **Verbal/Audio Consent:** Play a pre-recorded audio file (in the native language) explaining the project's purpose and data usage. The user must provide assent by pressing an explicit  
+    
+    IAgree
+    
+    button, or by recording their verbal assent.
+  
+  - **Written Consent:** Display a clear, simple text explanation (in the native language) with explicit  
+    
+    Yes
+    
+    /  
+    
+    No
+    
+    buttons.
+
+- **Consent Record:** The application must create a persistent, timestamped **Consent Log** containing:
+  
+  - The date and time the consent was sought and the response was recorded.
+  
+  - The user's unique device/session ID.
+  
+  - The type of prompt used (Verbal/Text) and the final response (Assent/Decline).
+  
+  - If Verbal Consent is used, the recording of the assent must be saved.
+
+- **Data Export:** This Consent Log (and any associated verbal recording) must be included as a **separate, clearly identifiable file** (e.g., `consent_log.json` or `consent_log.txt`) in the final ZIP export and be included in the Cloud Data Sync.
+
+### 4. Audio Recording
+
+- **High-Quality Capture:** Implement reliable, easy-to-access functionality for recording and stopping audio directly linked to the current word entry. **The recording button must be large, highly visible, and instantly recognizable (e.g., a simple, iconic microphone/dot).**
 
 - **Storage:** Store audio files locally, organized by session or language identifier.
 
 - **Playback:** Basic playback functionality to review the elicited audio instantly.
+
+## Future Enhancements and Advanced Workflow (Phase 2+)
+
+These features are intended for later development phases but are crucial for the long-term vision of empowering researchers and community members.
+
+### A. Non-Technical App Bundling Wizard (New Desktop Project)
+
+- **Goal:** Create a separate, open-source desktop application (e.g., for Windows/macOS/Linux—likely licensed under AGPL or GPL) similar in function to Scripture App Builder (https://software.sil.org/scriptureappbuilder/).
+
+- **Functionality:** This wizard would allow a researcher (who does not know Kotlin or XML) to:
+  
+  1. Select the base APK of this Android app.
+  
+  2. Specify a custom wordlist (XML) and matching picture files.
+  
+  3. Configure optional settings (e.g., cloud upload folder credentials, **consent prompts**).
+  
+  4. Generate a **customized, pre-configured APK bundle** ready for side-loading onto a native speaker's device. This eliminates the need for the user to manually import files.
+
+### B. Cloud Data Sync (Essential for Fieldwork)
+
+- **Goal:** Provide secure, researcher-configurable background synchronization of collected data.
+
+- **Functionality:**
+  
+  - Allow the researcher to configure credentials for a cloud service (e.g., Google Drive, Dropbox, or a custom server) within the App Bundling Wizard.
+  
+  - The Android app should upload collected transcriptions and audio files either **incrementally** (as they are recorded) or in **bulk** when an internet connection is available.
+
+### C. AI Image Generation Helper
+
+- **Goal:** Offer the researcher an integrated tool to quickly generate visual aids for words that lack images.
+
+- **Functionality:** Integrate the Google Gemini API to generate simple, descriptive **pencil sketch-style AI images** based on the word's gloss. The researcher would review, approve, and save these images to their media folder for inclusion in the App Bundle (Feature A). **Crucial:** This AI generation happens on the researcher's desktop/tool, not within the AGPL-licensed Android app, ensuring the core app remains clean and resource-light.
 
 ## Recommended Technology Stack
 
