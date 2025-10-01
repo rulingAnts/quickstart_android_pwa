@@ -114,7 +114,7 @@ These features are intended for later development phases but are crucial for the
 
 - **Functionality:** This wizard would allow a researcher (who does not know Kotlin or XML) to:
   
-  1. Select the base APK of this Android app.
+  1. Automatically include the base APK of this Android app (no manual selection required).
   
   2. Specify a custom wordlist (XML) and matching picture files.
   
