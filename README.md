@@ -1,6 +1,6 @@
 # Comparative Wordlist Elicitation Tool (Android)
 
-This repository contains the source code for an Android application designed to assist **trained linguists, fieldworkers, and community members** in the systematic **elicitation and documentation of minority languages**.
+This repository contains the source code for an Android application designed to assist **trained linguists, fieldworkers, and community members** in the systematic **elicitation and documentation of minority languages** through the collection of comparative wordlists like the [Quickstart Wordlist of Melanesia](https://www.sil.org/resources/archives/100200) or the [Comparative African Wordlist](https://www.sil.org/resources/archives/7882).
 
 The primary goal is to provide a tool simple enough for native speakers with limited technical and reading abilities to collect high-quality data.
 
