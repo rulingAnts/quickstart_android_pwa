@@ -12,6 +12,12 @@ The tool facilitates the collection of:
 
 - **Media Display:** Ability to display relevant pictures or media (when available in the wordlist data) to aid the elicitation process.
 
+## Attribution
+
+This documentation, including the project goals, feature set, and technical scope, was collaboratively authored by **Seth Johnston** via an extensive chat conversation and planning session with **Gemini**, a large language model from Google.
+
+---
+
 ## 🚧 Project Status: Seeking Initial Contributors 🚀
 
 **This project is currently in the conceptual and planning phase.** We are actively seeking **Android Developers** interested in linguistic fieldwork and open-source software to help build the initial application structure and core features. If you are looking for a high-impact project, please check the **Issues** tab to see initial feature discussions!
