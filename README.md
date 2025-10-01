@@ -42,9 +42,9 @@ The goal is to create a robust and reliable fieldwork companion. Initial develop
 
 - **Audio Format:** 16-bit WAV.
 
-- **Audio Naming Convention:** Files must be named using the 4-digit, leading-zero reference number from the word's `Reference` field, followed by the text from the word's `Gloss` field, with spaces replaced by periods (e.g., `0001_step.on.wav`).
+- **Audio Naming Convention:** Files must be named using the 4-digit, leading-zero reference number from the word's `Reference` field, followed by the text from the word's `Gloss` field, with spaces replaced by periods (e.g., `0001body.wav`).
 
-- **XML Linking:** The corresponding audio filename (e.g., `0001_step.on.wav`) must be included within the matching record in the exported XML files: in the `<SoundFile>` element/field for Dekereke XML, and as a voice writing system reference for LIFT XML (once implemented).
+- **XML Linking:** The corresponding audio filename (e.g., `0001body.wav`) must be included within the matching record in the exported XML files: in the `<SoundFile>` element/field for Dekereke XML, and as a voice writing system reference for LIFT XML (once implemented).
 
 ### 2. Elicitation Interface
 
