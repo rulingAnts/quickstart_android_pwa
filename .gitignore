@@ -1,5 +1,8 @@
 # Sample data (that I can't distribute in the same repository)
 QWOM2025-08.xml
+wordlist
+audio
+audio/*.*
 
 # macOS specific files
 .DS_Store
