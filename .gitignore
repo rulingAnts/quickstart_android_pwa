@@ -33,3 +33,127 @@ replay_pid*
 
 # Kotlin Gradle plugin data, see https://kotlinlang.org/docs/whatsnew20.html#new-directory-for-kotlin-data-in-gradle-projects
 .kotlin/
+
+# ===========================
+# Flutter/Dart Specific
+# ===========================
+
+# Flutter/Dart/Pub related
+**/build/
+**/pubspec.lock
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+
+# Flutter build outputs
+**/flutter_*.png
+**/flutter_*.jpg
+**/flutter_*.jpeg
+**/flutter_*.gif
+**/flutter_*.webp
+**/flutter_*.bmp
+**/flutter_*.wbmp
+**/flutter_*.ico
+
+# Flutter/Dart build artifacts
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/generated_plugin_registrant.dart
+
+# Flutter specific platform folders
+**/android/app/debug
+**/android/app/profile
+**/android/app/release
+**/android/.gradle/
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/key.properties
+**/android/.idea/
+**/android/.DS_Store
+
+# iOS specific (if applicable)
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/.DS_Store
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/flutter_export_environment.sh
+
+# Web specific
+**/web/flutter_service_worker.js
+**/web/index.html
+**/web/main.dart.js
+**/web/main.dart.js.map
+
+# Windows specific
+**/windows/flutter/ephemeral/
+
+# Linux specific  
+**/linux/flutter/ephemeral/
+
+# macOS specific
+**/macos/Flutter/ephemeral/
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Coverage
+coverage/
+**/coverage/
+
+# Dart/Flutter test related
+test/.test_coverage.dart
+coverage/lcov.info
+
+# IntelliJ/Android Studio
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+**/.idea/gradle.xml
+**/.idea/assetWizardSettings.xml
+**/.idea/dictionaries
+**/.idea/libraries
+**/.idea/shelf
+**/.idea/modules.xml
+**/.idea/.name
+**/.idea/compiler.xml
+**/.idea/copyright/profiles_settings.xml
+**/.idea/encodings.xml
+**/.idea/misc.xml
+**/.idea/scopes/scope_settings.xml
+**/.idea/vcs.xml
+**/.idea/jsLibraryMappings.xml
+**/.idea/datasources.xml
+**/.idea/dataSources.ids
+**/.idea/sqlDataSources.xml
+**/.idea/dynamic.xml
+**/.idea/uiDesigner.xml
+
+# VS Code
+**/.vscode/launch.json
+**/.vscode/extensions.json
+**/.vscode/settings.json (optional - remove if you want to track workspace settings)
+
+# Dart Observatory/DevTools
+**/observatory_tool
+
+# Dart VM
+**/.dart_tool/
+*.dill
+*.kernel
+
+# Flutter Doctor
+flutter_doctor.log
+
+# FVM (Flutter Version Management)
+.fvm/flutter_sdk
