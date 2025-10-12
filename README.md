@@ -80,15 +80,7 @@ The goal is to create a robust and reliable fieldwork companion. Initial develop
     
     button, or by recording their verbal assent.
   
-  - **Written Consent:** Display a clear, simple text explanation (in the native language) with explicit  
-    
-    Yes
-    
-    /  
-    
-    No
-    
-    buttons.
+  - **Written Consent:** Display a clear, simple text explanation (in the native language) with explicit  Yes / No buttons.
 
 - **Consent Record:** The application must create a persistent, timestamped **Consent Log** containing:
   
