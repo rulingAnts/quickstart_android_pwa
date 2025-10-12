@@ -146,17 +146,22 @@ These features are intended for later development phases but are crucial for the
 
 ## Recommended Technology Stack
 
-We suggest the following modern Android development stack:
+You can implement this app using either native Android (Kotlin) or Flutter (Dart). Choose the option that best fits contributor expertise and deployment needs. Both approaches must meet the same functional requirements (XML import/export, WAV audio handling, localization, accessibility, consent logging).
 
-- **Language:** Kotlin (Recommended)
+- Native Android (Kotlin)
+  - Language: Kotlin (Recommended)
+  - UI Framework: Jetpack Compose (preferred for modern, scalable UI) or traditional XML/Views.
+  - Architecture: Clean Architecture (MVVM) is encouraged for maintainability.
+  - Data Persistence: Android Room (for SQLite abstraction).
+  - XML Parsing: Standard Android/Kotlin XML libraries (e.g., XmlPullParser, SAX, DOM).
 
-- **UI Framework:** Jetpack Compose (Preferred for modern, scalable UI) or traditional XML/Views.
-
-- **Architecture:** Clean Architecture (MVVM) is encouraged for maintainability.
-
-- **Data Persistence:** Android Room (for SQLite abstraction).
-
-- **XML Parsing:** Standard Android or Kotlin libraries for XML reading.
+- Flutter (Dart) – Alternate Option
+  - Language: Dart
+  - UI Framework: Flutter
+  - Architecture: Clean Architecture with BLoC, Riverpod, or Provider.
+  - Data Persistence: sqflite or drift (SQLite abstraction).
+  - XML Parsing: xml (Dart package on pub.dev).
+  - Android Integration Notes: Ensure Android-specific permissions (microphone, storage), file handling, and 16‑bit WAV export conform to the requirements described above.
 
 ## Contribution and Development
 
