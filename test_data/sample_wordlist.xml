@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<!-- 
+  Sample Dekereke XML Wordlist Format
+  This is an example file showing the expected structure for import.
+  
+  Note: This file is for TESTING/DEVELOPMENT purposes only.
+  Real wordlist data should be acquired from: https://github.com/rulingAnts/QWOM_Data
+-->
+<Wordlist>
+  <Entry>
+    <Reference>0001</Reference>
+    <Gloss>body</Gloss>
+    <Picture>body.jpg</Picture>
+  </Entry>
+  <Entry>
+    <Reference>0002</Reference>
+    <Gloss>head</Gloss>
+    <Picture>head.jpg</Picture>
+  </Entry>
+  <Entry>
+    <Reference>0003</Reference>
+    <Gloss>hair</Gloss>
+  </Entry>
+  <Entry>
+    <Reference>0004</Reference>
+    <Gloss>eye</Gloss>
+    <Picture>eye.jpg</Picture>
+  </Entry>
+  <Entry>
+    <Reference>0005</Reference>
+    <Gloss>ear</Gloss>
+  </Entry>
+  <Entry>
+    <Reference>0006</Reference>
+    <Gloss>nose</Gloss>
+    <Picture>nose.jpg</Picture>
+  </Entry>
+  <Entry>
+    <Reference>0007</Reference>
+    <Gloss>mouth</Gloss>
+  </Entry>
+  <Entry>
+    <Reference>0008</Reference>
+    <Gloss>tooth</Gloss>
+  </Entry>
+  <Entry>
+    <Reference>0009</Reference>
+    <Gloss>tongue</Gloss>
+  </Entry>
+  <Entry>
+    <Reference>0010</Reference>
+    <Gloss>neck</Gloss>
+  </Entry>
+</Wordlist>

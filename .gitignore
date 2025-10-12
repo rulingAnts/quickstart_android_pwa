@@ -4,6 +4,9 @@ wordlist
 audio
 audio/*.*
 
+# But allow test data
+!test_data/
+
 # macOS specific files
 .DS_Store
 **/.DS_Store
