@@ -39,6 +39,14 @@
       "program": "lib/main.dart",
       "deviceId": "windows",
       "args": []
+    },
+    {
+      "name": "Flutter: Linux Desktop",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "linux",
+      "args": []
     }
   ]
 }
