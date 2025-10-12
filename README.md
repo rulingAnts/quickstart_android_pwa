@@ -1,6 +1,6 @@
 # Comparative Wordlist Elicitation Tool (Android)
 
-This repository contains the source code for an Android application designed to assist **trained linguists, fieldworkers, and community members** in the systematic **elicitation and documentation of minority languages**.
+This repository contains the source code for an Android application designed to assist **trained linguists, fieldworkers, and community members** in the systematic **elicitation and documentation of minority languages** through the collection of comparative wordlists like the [Quickstart Wordlist of Melanesia](https://www.sil.org/resources/archives/100200) or the [Comparative African Wordlist](https://www.sil.org/resources/archives/7882).
 
 The primary goal is to provide a tool simple enough for native speakers with limited technical and reading abilities to collect high-quality data.
 
@@ -11,6 +11,12 @@ The tool facilitates the collection of:
 - **Audio Recordings:** Functionality to capture high-quality audio recordings associated with each word.
 
 - **Media Display:** Ability to display relevant pictures or media (when available in the wordlist data) to aid the elicitation process.
+
+## Attribution
+
+This documentation, including the project goals, feature set, and technical scope, was collaboratively authored by **Seth Johnston** via an extensive chat conversation and planning session with **Gemini**, a large language model from Google.
+
+---
 
 ## 🚧 Project Status: Seeking Initial Contributors 🚀
 
@@ -42,9 +48,9 @@ The goal is to create a robust and reliable fieldwork companion. Initial develop
 
 - **Audio Format:** 16-bit WAV.
 
-- **Audio Naming Convention:** Files must be named using the 4-digit, leading-zero reference number from the word's `Reference` field, followed by the text from the word's `Gloss` field, with spaces replaced by periods (e.g., `0001_step.on.wav`).
+- **Audio Naming Convention:** Files must be named using the 4-digit, leading-zero reference number from the word's `Reference` field, followed by the text from the word's `Gloss` field, with spaces replaced by periods (e.g., `0001body.wav`).
 
-- **XML Linking:** The corresponding audio filename (e.g., `0001_step.on.wav`) must be included within the matching record in the exported XML files: in the `<SoundFile>` element/field for Dekereke XML, and as a voice writing system reference for LIFT XML (once implemented).
+- **XML Linking:** The corresponding audio filename (e.g., `0001body.wav`) must be included within the matching record in the exported XML files: in the `<SoundFile>` element/field for Dekereke XML, and as a voice writing system reference for LIFT XML (once implemented).
 
 ### 2. Elicitation Interface
 
@@ -140,17 +146,22 @@ These features are intended for later development phases but are crucial for the
 
 ## Recommended Technology Stack
 
-We suggest the following modern Android development stack:
+You can implement this app using either native Android (Kotlin) or Flutter (Dart). Choose the option that best fits contributor expertise and deployment needs. Both approaches must meet the same functional requirements (XML import/export, WAV audio handling, localization, accessibility, consent logging).
 
-- **Language:** Kotlin (Recommended)
+- Native Android (Kotlin)
+  - Language: Kotlin (Recommended)
+  - UI Framework: Jetpack Compose (preferred for modern, scalable UI) or traditional XML/Views.
+  - Architecture: Clean Architecture (MVVM) is encouraged for maintainability.
+  - Data Persistence: Android Room (for SQLite abstraction).
+  - XML Parsing: Standard Android/Kotlin XML libraries (e.g., XmlPullParser, SAX, DOM).
 
-- **UI Framework:** Jetpack Compose (Preferred for modern, scalable UI) or traditional XML/Views.
-
-- **Architecture:** Clean Architecture (MVVM) is encouraged for maintainability.
-
-- **Data Persistence:** Android Room (for SQLite abstraction).
-
-- **XML Parsing:** Standard Android or Kotlin libraries for XML reading.
+- Flutter (Dart) – Alternate Option
+  - Language: Dart
+  - UI Framework: Flutter
+  - Architecture: Clean Architecture with BLoC, Riverpod, or Provider.
+  - Data Persistence: sqflite or drift (SQLite abstraction).
+  - XML Parsing: xml (Dart package on pub.dev).
+  - Android Integration Notes: Ensure Android-specific permissions (microphone, storage), file handling, and 16‑bit WAV export conform to the requirements described above.
 
 ## Contribution and Development
 
