@@ -4,7 +4,7 @@ This document explains the transformation from Flutter/Dart to Progressive Web A
 
 ## Overview
 
-The project was originally started with Flutter/Dart but has been transformed into a PWA for broader accessibility and easier deployment. The Flutter code remains in the repository for reference but is not actively maintained.
+The project was originally started with Flutter/Dart but has been transformed into a PWA for broader accessibility and easier deployment. The Flutter code is no longer part of this repository.
 
 ## Why PWA?
 
@@ -27,7 +27,7 @@ The project was originally started with Flutter/Dart but has been transformed in
 
 ## Architecture Comparison
 
-### Flutter Implementation (Old)
+### Flutter Implementation (Historical)
 
 ```
 lib/
@@ -50,13 +50,7 @@ lib/
 └── utils/
     └── logger.dart
 
-Dependencies:
-- provider (state management)
-- sqflite (database)
-- file_picker (file operations)
-- record/audioplayers (audio)
-- xml (parsing)
-- archive (ZIP)
+Dependencies (historical): provider, sqflite, file_picker, record/audioplayers, xml, archive
 ```
 
 ### PWA Implementation (Current)
@@ -242,13 +236,7 @@ open http://localhost:8000
 
 ## Maintaining Both
 
-If you want to maintain both versions:
-
-1. Keep Flutter code in `lib/`, `android/`, etc.
-2. Keep PWA code in `www/`
-3. Share test data in `test_data/`
-4. Document platform-specific features
-5. Keep data formats compatible (XML, audio)
+If you want to maintain both a Flutter and a PWA version in the future, do so in separate repositories to avoid confusion. Keep data formats compatible (XML, audio) and share test data via a dedicated data repo.
 
 ## Conclusion
 

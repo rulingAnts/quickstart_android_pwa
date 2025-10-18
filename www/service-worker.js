@@ -1,15 +1,18 @@
 // Service Worker for Wordlist Elicitation Tool PWA
 
-const CACHE_NAME = 'wordlist-elicitation-v1';
+const CACHE_NAME = 'wordlist-elicitation-v2';
 const urlsToCache = [
     '/',
     '/index.html',
     '/css/styles.css',
+    '/js/logger.js',
+    '/js/capability-check.js',
     '/js/app.js',
     '/js/storage.js',
     '/js/xml-parser.js',
     '/js/audio-recorder.js',
     '/js/export.js',
+    '/js/update-check.js',
     '/manifest.json'
 ];
 

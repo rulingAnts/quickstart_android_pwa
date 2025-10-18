@@ -4,7 +4,7 @@ This repository contains a **Progressive Web App (PWA)** designed to assist **tr
 
 The primary goal is to provide a tool simple enough for native speakers with limited technical and reading abilities to collect high-quality data.
 
-**🎉 This project has been transformed from Flutter/Dart to a modern PWA that works on any device with a browser and can be packaged as an Android app using TWA (Trusted Web Activity).**
+This project is a modern Progressive Web App (PWA) that works on any device with a browser and can be packaged as an Android app using TWA (Trusted Web Activity).
 
 The tool facilitates the collection of:
 
@@ -20,20 +20,19 @@ This documentation, including the project goals, feature set, and technical scop
 
 ---
 
-## ✅ Project Status: PWA Implementation Complete! 🚀
+## ✅ Project Status: PWA Implementation Complete
 
-**The PWA implementation is complete and functional!** The application now works as a Progressive Web App that can be used in any modern browser and packaged as an Android app using TWA.
+The application works as a Progressive Web App that can be used in any modern browser and packaged as an Android app using TWA.
 
 ### Quick Start
 
 ```bash
-# Run the PWA locally
-cd www
-python3 -m http.server 8000
-# Open http://localhost:8000 in your browser
+# Run the PWA locally (requires Node 18+)
+npm install  # no deps, but ensures environment
+npm start    # starts local dev server on http://127.0.0.1:5173/
 ```
 
-See the [PWA README](www/README.md) for detailed setup instructions.
+Alternatives: see the PWA docs in `www/README.md` for simple Python/PHP server options.
 
 ## Core Features and Technical Scope (MVP Focus)
 
@@ -175,23 +174,20 @@ See the [PWA_README.md](PWA_README.md) for conversion instructions.
 
 ## Contribution and Development
 
-We welcome contributions! All contributions to this code must be licensed under the **AGPL-3.0** or a compatible license.
+Contributions are welcome! This is a browser-based PWA built with vanilla HTML/CSS/JS and a small Node dev server for local use.
 
-### First Steps for New Developers:
+Quick dev loop:
+- npm start — run the local dev server serving `./www` with proper headers, SPA fallback, and SW no-cache
+- npm run dev:android — guided Android emulator workflow (sets up adb reverse and can open Chrome on the emulator)
+- npm run pull:prompt — interactively pull a ZIP from `/sdcard/Download` on a connected/emulated device to `~/Downloads`
 
-1. **Check Issues:** Start by reviewing the **Issues** tab. Look for issues tagged `good first issue` or `help wanted` to understand immediate needs and planned features.
-
-2. **Propose Architecture:** The first major step is designing the core data model (Room entities) and the XML parsing logic. Feel free to open a new Issue to propose an initial architecture plan.
-
-3. **Fork and Clone:** Fork the repository and start setting up the basic Android project structure.
-
-Please use the GitHub Issues page for bug reports, feature requests, and community discussions.
+Please use GitHub Issues for bugs and feature requests. See `www/README.md`, `QUICKSTART_PWA.md`, and `INSTALLATION.md` for PWA-specific details.
 
 ## Licensing (AGPL-3.0)
 
 The source code for the Comparative Wordlist Elicitation Tool is licensed under the **GNU Affero General Public License Version 3 (AGPL-3.0)**.
 
-The full license text is available in the `LICENSE_AGPL.md` file in this repository.
+The full license text is available in the `LICENSE` file in this repository.
 
 ### AGPL-3.0 Obligations
 

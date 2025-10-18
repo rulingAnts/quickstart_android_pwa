@@ -158,6 +158,12 @@ coverage/lcov.info
 **/.vscode/tasks.json
 tool/bootstrap.sh
 
+# Node (root-level dev server only)
+/node_modules/
+/package-lock.json
+/pnpm-lock.yaml
+/yarn.lock
+
 # Dart Observatory/DevTools
 **/observatory_tool
 

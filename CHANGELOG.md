@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned Features
+
+### Changed
+- Repository cleaned to reflect PWA-only implementation (removed Flutter tooling/docs; updated docs and license metadata)
+
+## [1.1.0] - 2025-01-18
+
+### Changed
+- Major migration complete: fully transitioned to a browser-based PWA with offline support, strict 16-bit WAV capability gate, UTF-16 import/export, entry list panel, and Android dev helper scripts.
+- Documentation overhauled to PWA/TWA focus (README, DEVELOPMENT, CONTRIBUTING, PWA docs).
+
 - Consent screen UI with verbal/written options
 - LIFT XML export format support
 - Image display for wordlist entries with Picture field

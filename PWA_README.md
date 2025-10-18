@@ -1,6 +1,6 @@
 # PWA/TWA Transformation Complete
 
-This project has been transformed from a Flutter/Dart application to a Progressive Web App (PWA) with Trusted Web Activity (TWA) support.
+This project is implemented as a Progressive Web App (PWA) with optional Trusted Web Activity (TWA) packaging for Android.
 
 ## What Changed
 
@@ -21,9 +21,9 @@ This project has been transformed from a Flutter/Dart application to a Progressi
 ### Option 1: Run Locally
 
 ```bash
-cd www
-python3 -m http.server 8000
-# Then open http://localhost:8000
+npm install
+npm start
+# Then open http://127.0.0.1:5173
 ```
 
 ### Option 2: Deploy to Web Server

@@ -1,6 +1,6 @@
-# Contributing to Wordlist Elicitation Tool
+# Contributing to Wordlist Elicitation Tool (PWA)
 
-Thank you for your interest in contributing to this project! This Flutter implementation aims to provide a simple, accessible tool for linguistic fieldwork.
+Thanks for your interest in contributing! This project is a browser-based PWA implemented with vanilla HTML/CSS/JS. Flutter/Dart is no longer used.
 
 ## Code of Conduct
 
@@ -12,10 +12,9 @@ Thank you for your interest in contributing to this project! This Flutter implem
 
 ### Prerequisites
 
-1. **Flutter SDK** - Install from https://flutter.dev/docs/get-started/install
-2. **Git** - For version control
-3. **IDE** - Android Studio or VS Code with Flutter extensions
-4. **Android SDK** - For building Android apps
+1. **Node.js 18+**
+2. **Git**
+3. A modern browser (Chrome/Edge/Firefox/Safari)
 
 ### Setup Development Environment
 
@@ -26,17 +25,12 @@ Thank you for your interest in contributing to this project! This Flutter implem
    cd Quickstart_Android
    ```
 
-3. Install dependencies:
-   ```bash
-   flutter pub get
-   ```
-
-4. Verify setup:
-   ```bash
-   flutter doctor
-   flutter analyze
-   flutter test
-   ```
+3. Run locally:
+  ```bash
+  npm install
+  npm start
+  # open http://127.0.0.1:5173
+  ```
 
 ## Development Workflow
 
@@ -55,21 +49,11 @@ git checkout -b fix/issue-description
 - Add comments for complex logic
 - Update tests for changed functionality
 
-### 3. Test Your Changes
+### 3. Validate Your Changes
 
-```bash
-# Run all tests
-flutter test
-
-# Analyze code
-flutter analyze
-
-# Format code
-flutter format .
-
-# Run the app
-flutter run
-```
+- Ensure the app loads and the service worker updates cleanly
+- Test import/export with sample data in `test_data/`
+- Verify audio record/playback and the 16-bit WAV capability check
 
 ### 4. Commit Changes
 
@@ -96,45 +80,31 @@ Commit message format:
 ```bash
 git push origin feature/your-feature-name
 ```
-
-Then create a Pull Request on GitHub.
+Then open a Pull Request.
 
 ## Code Style Guidelines
 
-### Dart/Flutter Conventions
+### Code Style
 
-1. **Follow Dart style guide**: https://dart.dev/guides/language/effective-dart/style
-2. **Use `flutter format`** before committing
-3. **Prefer `const` constructors** where possible
-4. **Use meaningful variable names**
-
-Example:
-```dart
-// Good
-final wordlistEntry = WordlistEntry(
-  id: 1,
-  reference: '0001',
-  gloss: 'body',
-);
-
-// Avoid
-final we = WordlistEntry(
-  id: 1,
-  reference: '0001',
-  gloss: 'body',
-);
-```
+- Keep it simple and dependency-free when possible
+- Use meaningful variable/function names
+- Keep functions small and focused
+- Prefer progressive enhancement and graceful errors
 
 ### File Organization
 
 ```
-lib/
-├── models/          # Data models only
-├── services/        # Business logic, external APIs
-├── providers/       # State management
-├── screens/         # Full-page UI components
-├── widgets/         # Reusable UI components
-└── utils/           # Helper functions, constants
+www/
+├── index.html
+├── css/
+├── js/
+│   ├── app.js
+│   ├── storage.js
+│   ├── xml-parser.js
+│   ├── audio-recorder.js
+│   └── export.js
+├── manifest.json
+└── service-worker.js
 ```
 
 ### Widget Structure
@@ -159,39 +129,12 @@ class MyWidget extends StatelessWidget {
 }
 ```
 
-## Testing Guidelines
+### Testing Guidelines
 
-### Unit Tests
-
-Write unit tests for:
-- Models (serialization, validation)
-- Services (business logic)
-- Utilities
-
-Example:
-```dart
-test('should create WordlistEntry from map', () {
-  final map = {'id': 1, 'reference': '0001', 'gloss': 'body'};
-  final entry = WordlistEntry.fromMap(map);
-  expect(entry.id, 1);
-});
-```
-
-### Widget Tests
-
-Test UI components:
-```dart
-testWidgets('displays word gloss', (WidgetTester tester) async {
-  await tester.pumpWidget(
-    MaterialApp(home: WordCard(gloss: 'body')),
-  );
-  expect(find.text('body'), findsOneWidget);
-});
-```
-
-### Integration Tests
-
-For complex workflows (optional but recommended).
+Manual testing is usually sufficient:
+- Import sample XML, verify entries sorted by numeric Reference
+- Record a short audio, confirm playback and inclusion in export
+- Export ZIP and inspect: UTF-16LE XML, audio files named like `0001body.wav`
 
 ## Documentation
 
@@ -213,20 +156,18 @@ Future<int> importDekerekeXml(String filePath) async {
 
 ### Update README Files
 
-- `README.md` - Main project goals (already exists)
-- `FLUTTER_README.md` - Flutter-specific documentation
-- `DEVELOPMENT.md` - Development guide
+- `README.md` - Main project overview
+- `DEVELOPMENT.md` - Developer guide (PWA)
+- `www/README.md` - PWA usage notes
 
 ## Pull Request Process
 
 ### Before Submitting
 
 - [ ] Code follows style guidelines
-- [ ] All tests pass (`flutter test`)
-- [ ] No linting errors (`flutter analyze`)
-- [ ] Code is formatted (`flutter format .`)
-- [ ] Documentation is updated
-- [ ] Commits are clean and meaningful
+- [ ] No syntax errors (check DevTools console)
+- [ ] Service worker updates cleanly
+- [ ] Documentation updated when needed
 
 ### PR Description Template
 
@@ -257,42 +198,14 @@ How was this tested?
 3. Once approved, PR will be merged
 4. Your contribution will be credited
 
-## Areas for Contribution
+### Areas for Contribution
 
-### High Priority
-
-1. **Consent Screen UI** - Implement verbal/written consent options
-2. **LIFT XML Export** - Add LIFT format support
-3. **Image Display** - Show pictures from wordlist data
-4. **Error Handling** - Improve error messages and recovery
-
-### Medium Priority
-
-5. **Font Integration** - Add Charis SIL, Doulos SIL fonts
-6. **Keyboard Support** - Better IPA input handling
-7. **Cloud Sync** - Optional data backup
-8. **Data Validation** - Input validation and quality checks
-
-### Future Enhancements
-
-9. **Desktop Support** - Windows/Mac/Linux versions
-10. **Web Version** - Browser-based tool
-11. **Advanced Audio** - Audio editing features
-12. **Batch Operations** - Bulk import/export
-
-### Documentation
-
-- Improve setup instructions
-- Add video tutorials
-- Create user guide
-- Translate documentation
-
-### Testing
-
-- Increase test coverage
-- Add integration tests
-- Performance testing
-- Accessibility testing
+- Consent screen UI (verbal/written)
+- LIFT XML export
+- Picture support in entries
+- i18n and font integration (Charis/Doulos SIL)
+- Cloud sync (optional)
+- Accessibility and performance
 
 ## Architecture Decisions
 
@@ -311,9 +224,8 @@ When making significant changes:
 
 ### Data Persistence
 
-- Use SQLite (via sqflite) for local storage
-- Follow database service pattern
-- Handle migrations carefully
+- Use IndexedDB for local storage
+- Keep schema small and evolvable
 
 ### File Operations
 
@@ -323,9 +235,7 @@ When making significant changes:
 
 ## License Requirements
 
-All contributions must be licensed under **AGPL-3.0** or a compatible license.
-
-By contributing, you agree that your contributions will be licensed under the AGPL-3.0 license.
+All contributions must be licensed under **AGPL-3.0** or a compatible license. By contributing, you agree that your contributions will be licensed under AGPL-3.0.
 
 ### Important Notes
 
@@ -337,9 +247,9 @@ By contributing, you agree that your contributions will be licensed under the AG
 
 ### Resources
 
-- **Flutter Docs**: https://flutter.dev/docs
-- **Project README**: See main README.md for project goals
-- **Development Guide**: See DEVELOPMENT.md
+- Project README
+- DEVELOPMENT.md (PWA)
+- www/README.md
 
 ### Questions?
 
@@ -349,30 +259,7 @@ By contributing, you agree that your contributions will be licensed under the AG
 
 ### Bug Reports
 
-Use this template:
-
-```markdown
-## Bug Description
-What went wrong?
-
-## Steps to Reproduce
-1. Step 1
-2. Step 2
-
-## Expected Behavior
-What should happen?
-
-## Actual Behavior
-What actually happened?
-
-## Environment
-- Flutter version:
-- Device/Emulator:
-- Android version:
-
-## Screenshots
-If applicable
-```
+Please include steps to reproduce, browser and OS, and any console errors.
 
 ## Recognition
 

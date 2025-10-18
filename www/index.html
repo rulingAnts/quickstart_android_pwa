@@ -15,6 +15,20 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- Unsupported Browser Screen -->
+    <div id="unsupported" class="screen" style="display:none;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:24px;">
+        <div>
+            <h1 style="margin-bottom:12px;">Unsupported Browser</h1>
+            <p style="margin:0 0 8px;">This app requires microphone access, MediaRecorder, Web Audio, and 16‑bit WAV support.</p>
+            <p style="margin:0 0 16px;">Please use a recent version of Chrome, Edge, or Android WebView (or Chrome on Android).</p>
+            <div id="unsupported-reason" style="color:#d32f2f; font-weight:600; margin-bottom:16px;"></div>
+            <button id="recheck-btn" class="main-button" style="display:inline-flex;align-items:center;gap:8px;">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 6V3L8 7l4 4V8c2.76 0 5 2.24 5 5 0 1.01-.3 1.95-.82 2.74l1.46 1.46A7.93 7.93 0 0 0 20 13c0-4.42-3.58-8-8-8zm-5.18.26A7.93 7.93 0 0 0 4 11c0 4.42 3.58 8 8 8v3l4-4-4-4v3c-2.76 0-5-2.24-5-5 0-1.01.3-1.95.82-2.74L6.54 6.26z"/></svg>
+                Re-check capabilities
+            </button>
+        </div>
+    </div>
+
     <div id="app">
         <!-- Home Screen -->
         <div id="home-screen" class="screen active">
@@ -60,7 +74,7 @@
                 </div>
                 
                 <div class="button-group">
-                    <button class="main-button" id="import-btn">
+                    <button class="main-button" id="import-btn" data-nav="import-screen">
                         <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
                             <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
                         </svg>
@@ -109,6 +123,24 @@
                         </svg>
                         <span>Select XML File</span>
                     </button>
+
+                    <div style="margin:16px 0; text-align:center; color:#666;">or</div>
+
+                    <div class="online-import">
+                        <label for="online-source-select" style="display:block; margin-bottom:8px; font-weight:600;">Import from Online Source</label>
+                        <select id="online-source-select" class="select-input" style="width:100%; margin-bottom:12px;">
+                            <option value="https://raw.githubusercontent.com/rulingAnts/QWOM_Data/refs/heads/main/QWOM2025-08.xml">
+                                Quickstart Wordlist of Melanesia (QWOM)
+                            </option>
+                        </select>
+                        <button class="main-button" id="import-online-btn">
+                            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor" aria-hidden="true">
+                                <path d="M19 19H5v-2h14v2zM13 5.83V15h-2V5.83L7.41 9.41 6 8l6-6 6 6-1.41 1.41L13 5.83z"/>
+                            </svg>
+                            <span>Import Selected Source</span>
+                        </button>
+                        <p style="color:#666; font-size:0.9em; margin-top:8px;">Note: This replaces any existing wordlist in local storage.</p>
+                    </div>
                     
                     <div id="import-status" class="status-message"></div>
                 </div>
@@ -124,9 +156,30 @@
                     </svg>
                 </button>
                 <h1>Elicitation</h1>
+                <button class="back-button" id="entry-list-btn" title="All entries" aria-label="All entries">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/>
+                    </svg>
+                </button>
             </header>
             
             <main class="main-content elicitation-content">
+                <!-- Slide-out entry list panel -->
+                <div id="entry-list-panel" style="display:none; position:fixed; top:0; right:0; bottom:0; width:320px; max-width:85vw; background:#fff; box-shadow:-4px 0 16px rgba(0,0,0,.2); z-index:1000;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 12px; border-bottom:1px solid #eee;">
+                        <strong>All Entries</strong>
+                        <button id="entry-list-close" class="back-button" aria-label="Close entries list">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                        </button>
+                    </div>
+                    <div style="padding:8px 8px 80px 8px; overflow:auto; height:calc(100% - 48px);">
+                        <ul id="entry-list" style="list-style:none; margin:0; padding:0;">
+                            <!-- populated dynamically -->
+                        </ul>
+                    </div>
+                </div>
+                <div id="entry-list-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.25); z-index:999;"></div>
+
                 <div class="word-card">
                     <div class="word-reference" id="word-reference">0001</div>
                     <div class="word-gloss" id="word-gloss">body</div>
@@ -230,18 +283,92 @@
         </div>
     </div>
     
-    <script src="js/storage.js"></script>
-    <script src="js/xml-parser.js"></script>
-    <script src="js/audio-recorder.js"></script>
-    <script src="js/export.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/logger.js"></script>
+    <script src="js/capability-check.js"></script>
     <script>
-        // Register service worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(registration => console.log('Service Worker registered'))
-                .catch(error => console.error('Service Worker registration failed:', error));
+        function showUnsupported(reasonText) {
+            const app = document.getElementById('app');
+            if (app) app.style.display = 'none';
+            const u = document.getElementById('unsupported');
+            if (u) u.style.display = 'flex';
+            const r = document.getElementById('unsupported-reason');
+            if (r) r.textContent = reasonText ? `Reason: ${reasonText}` : '';
         }
+
+        function loadScriptsSequential(urls, done) {
+            let i = 0;
+            const next = () => {
+                if (i >= urls.length) {
+                    if (typeof done === 'function') done();
+                    return;
+                }
+                const s = document.createElement('script');
+                s.src = urls[i++];
+                s.onload = next;
+                s.onerror = () => {
+                    Log.e('Failed to load script', s.src);
+                    showUnsupported();
+                };
+                document.body.appendChild(s);
+            };
+            next();
+        }
+
+        (async function init() {
+            try {
+                const res = await (window.CapabilityCheck && window.CapabilityCheck.checkWithCache ? window.CapabilityCheck.checkWithCache() : { ok:false, reason:'capability module missing' });
+                Log.i('Capability check result', res);
+                if (!res.ok) {
+                    Log.w('Unsupported environment', res.reason);
+                    showUnsupported(res.reason);
+                    return;
+                }
+            } catch (e) {
+                Log.e('Capability check failed', e);
+                showUnsupported();
+                return;
+            }
+
+            const scripts = [
+                'js/storage.js',
+                'js/xml-parser.js',
+                'js/audio-recorder.js',
+                'js/export.js',
+                'js/app.js'
+            ];
+            loadScriptsSequential(scripts, function () {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('service-worker.js')
+                        .then(() => {
+                            Log.i('Service Worker registered');
+                            // After registration, wire the update checker
+                            const s = document.createElement('script');
+                            s.src = 'js/update-check.js';
+                            s.onload = () => Log.d && Log.d('Update checker loaded');
+                            s.onerror = () => Log.w && Log.w('Update checker failed to load');
+                            document.body.appendChild(s);
+                        })
+                        .catch((error) => Log.e('Service Worker registration failed', error));
+                }
+            });
+        })();
+                // Re-check button wiring
+                (function wireRecheck(){
+                    const btn = document.getElementById('recheck-btn');
+                    if (!btn) return;
+                    btn.addEventListener('click', async () => {
+                        try {
+                            if (window.CapabilityCheck && window.CapabilityCheck.clearCache) {
+                                window.CapabilityCheck.clearCache();
+                            }
+                            Log.i('Re-running capability checks');
+                            // Force a fresh page load to re-run checks and ensure modules init cleanly
+                            window.location.reload();
+                        } catch (e){
+                            Log.e('Re-check failed', e);
+                        }
+                    });
+                })();
     </script>
 </body>
 </html>

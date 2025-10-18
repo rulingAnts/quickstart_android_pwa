@@ -35,9 +35,10 @@ class ExportManager {
             const audioFiles = await storageManager.getAllAudio();
             const consentRecords = await storageManager.getAllConsentRecords();
 
-            // Generate XML
+            // Generate XML (string) and encode as UTF-16LE with BOM
             const xmlContent = xmlParser.generateXML(entries);
-            zip.file('wordlist.xml', xmlContent);
+            const xmlUtf16 = this.encodeUtf16LeWithBom(xmlContent);
+            zip.file('wordlist.xml', xmlUtf16);
 
             // Add audio files
             const audioFolder = zip.folder('audio');
@@ -72,6 +73,20 @@ class ExportManager {
             console.error('Export failed:', error);
             throw error;
         }
+    }
+
+    // Encode a JS string to UTF-16LE with BOM (0xFF,0xFE)
+    encodeUtf16LeWithBom(str) {
+        const buf = new Uint8Array(2 + str.length * 2);
+        // BOM FF FE
+        buf[0] = 0xFF; buf[1] = 0xFE;
+        let o = 2;
+        for (let i = 0; i < str.length; i++) {
+            const code = str.charCodeAt(i);
+            buf[o++] = code & 0xFF;        // low byte
+            buf[o++] = (code >> 8) & 0xFF; // high byte
+        }
+        return buf;
     }
 
     generateConsentLog(records) {

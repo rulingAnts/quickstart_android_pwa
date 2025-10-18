@@ -81,35 +81,35 @@ class XMLParser {
     }
 
     generateXML(entries) {
-        // Create XML document
-        let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-        xml += '<Wordlist>\n';
+        // Create XML document string content (no BOM here). We will override declaration to required format.
+    let xml = '<?xml version="1.0" encoding="utf-16" standalone="yes" ?>\n';
+    xml += '<phon_data>\n';
 
         entries.forEach(entry => {
-            xml += '  <Word>\n';
+            xml += '  <data_form>\n';
             xml += `    <Reference>${this.escapeXml(entry.reference)}</Reference>\n`;
             xml += `    <Gloss>${this.escapeXml(entry.gloss)}</Gloss>\n`;
-            
+
             if (entry.localTranscription) {
                 xml += `    <LocalTranscription>${this.escapeXml(entry.localTranscription)}</LocalTranscription>\n`;
             }
-            
+
             if (entry.audioFilename) {
                 xml += `    <SoundFile>${this.escapeXml(entry.audioFilename)}</SoundFile>\n`;
             }
-            
+
             if (entry.pictureFilename) {
                 xml += `    <Picture>${this.escapeXml(entry.pictureFilename)}</Picture>\n`;
             }
-            
+
             if (entry.recordedAt) {
                 xml += `    <RecordedAt>${this.escapeXml(entry.recordedAt)}</RecordedAt>\n`;
             }
-            
-            xml += '  </Word>\n';
+
+            xml += '  </data_form>\n';
         });
 
-        xml += '</Wordlist>';
+        xml += '</phon_data>';
         return xml;
     }
 
