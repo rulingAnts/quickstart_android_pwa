@@ -1,8 +1,10 @@
-# Comparative Wordlist Elicitation Tool (Android)
+# Comparative Wordlist Elicitation Tool (PWA/TWA)
 
-This repository contains the source code for an Android application designed to assist **trained linguists, fieldworkers, and community members** in the systematic **elicitation and documentation of minority languages** through the collection of comparative wordlists like the [Quickstart Wordlist of Melanesia](https://www.sil.org/resources/archives/100200) or the [Comparative African Wordlist](https://www.sil.org/resources/archives/7882).
+This repository contains a **Progressive Web App (PWA)** designed to assist **trained linguists, fieldworkers, and community members** in the systematic **elicitation and documentation of minority languages** through the collection of comparative wordlists like the [Quickstart Wordlist of Melanesia](https://www.sil.org/resources/archives/100200) or the [Comparative African Wordlist](https://www.sil.org/resources/archives/7882).
 
 The primary goal is to provide a tool simple enough for native speakers with limited technical and reading abilities to collect high-quality data.
+
+**🎉 This project has been transformed from Flutter/Dart to a modern PWA that works on any device with a browser and can be packaged as an Android app using TWA (Trusted Web Activity).**
 
 The tool facilitates the collection of:
 
@@ -18,19 +20,30 @@ This documentation, including the project goals, feature set, and technical scop
 
 ---
 
-## 🚧 Project Status: Seeking Initial Contributors 🚀
+## ✅ Project Status: PWA Implementation Complete! 🚀
 
-**This project is currently in the conceptual and planning phase.** We are actively seeking **Android Developers** interested in linguistic fieldwork and open-source software to help build the initial application structure and core features. If you are looking for a high-impact project, please check the **Issues** tab to see initial feature discussions!
+**The PWA implementation is complete and functional!** The application now works as a Progressive Web App that can be used in any modern browser and packaged as an Android app using TWA.
+
+### Quick Start
+
+```bash
+# Run the PWA locally
+cd www
+python3 -m http.server 8000
+# Open http://localhost:8000 in your browser
+```
+
+See the [PWA README](www/README.md) for detailed setup instructions.
 
 ## Core Features and Technical Scope (MVP Focus)
 
 The goal is to create a robust and reliable fieldwork companion. Initial development should focus on these key areas:
 
-### 1. Data Management
+### 1. Data Management ✅
 
-- **XML Import:** Implement an efficient, fault-tolerant parser for the Dekereke XML format imported by the user.
+- **XML Import:** ✅ Implemented - Efficient, fault-tolerant parser for the Dekereke XML format.
 
-- **Local Storage:** Utilize **SQLite/Room** for persistent storage of the imported wordlist, newly collected transcriptions, and metadata.
+- **Local Storage:** ✅ Implemented - Uses **IndexedDB** for persistent storage of the imported wordlist, newly collected transcriptions, and metadata (replaces SQLite for web compatibility).
 
 - **Session Tracking:** Allow users to resume fieldwork sessions and track which words have been elicited.
 
@@ -52,9 +65,9 @@ The goal is to create a robust and reliable fieldwork companion. Initial develop
 
 - **XML Linking:** The corresponding audio filename (e.g., `0001body.wav`) must be included within the matching record in the exported XML files: in the `<SoundFile>` element/field for Dekereke XML, and as a voice writing system reference for LIFT XML (once implemented).
 
-### 2. Elicitation Interface
+### 2. Elicitation Interface ✅
 
-- **Responsive UI & Accessibility:** Design an **extremely simple, visually driven, and intuitive interface**. The UI must rely minimally on text labels, using large icons and high-contrast color schemes suitable for all users, including those with lower reading or technical abilities. Optimized for tablet and mobile use in fieldwork environments (often low-light or outdoor settings).
+- **Responsive UI & Accessibility:** ✅ Implemented - **Extremely simple, visually driven, and intuitive interface**. The UI relies minimally on text labels, using large icons and high-contrast color schemes suitable for all users, including those with lower reading or technical abilities. Optimized for tablet and mobile use in fieldwork environments (often low-light or outdoor settings).
 
 - **Localization (i18n):** **Crucial Requirement:** All static in-app text (e.g., button labels, settings headers, instructions, consent text) must be fully localizable. The researcher must be able to configure and bundle the appropriate language of wider communication within the application package.
 
@@ -94,13 +107,13 @@ The goal is to create a robust and reliable fieldwork companion. Initial develop
 
 - **Data Export:** This Consent Log (and any associated verbal recording) must be included as a **separate, clearly identifiable file** (e.g., `consent_log.json` or `consent_log.txt`) in the final ZIP export and be included in the Cloud Data Sync.
 
-### 4. Audio Recording
+### 4. Audio Recording ✅
 
-- **High-Quality Capture:** Implement reliable, easy-to-access functionality for recording and stopping audio directly linked to the current word entry. **The recording button must be large, highly visible, and instantly recognizable (e.g., a simple, iconic microphone/dot).**
+- **High-Quality Capture:** ✅ Implemented - Reliable, easy-to-access functionality using Web Audio API for recording and stopping audio directly linked to the current word entry. **The recording button is large, highly visible, and instantly recognizable (iconic microphone).**
 
-- **Storage:** Store audio files locally, organized by session or language identifier.
+- **Storage:** ✅ Implemented - Store audio files locally in IndexedDB, organized by word reference.
 
-- **Playback:** Basic playback functionality to review the elicited audio instantly.
+- **Playback:** ✅ Implemented - Basic playback functionality to review the elicited audio instantly.
 
 ## Future Enhancements and Advanced Workflow (Phase 2+)
 
@@ -136,24 +149,29 @@ These features are intended for later development phases but are crucial for the
 
 - **Functionality:** Integrate the Google Gemini API to generate simple, descriptive **pencil sketch-style AI images** based on the word's gloss. The researcher would review, approve, and save these images to their media folder for inclusion in the App Bundle (Feature A). **Crucial:** This AI generation happens on the researcher's desktop/tool, not within the AGPL-licensed Android app, ensuring the core app remains clean and resource-light.
 
-## Recommended Technology Stack
+## Technology Stack (PWA Implementation) ✅
 
-You can implement this app using either native Android (Kotlin) or Flutter (Dart). Choose the option that best fits contributor expertise and deployment needs. Both approaches must meet the same functional requirements (XML import/export, WAV audio handling, localization, accessibility, consent logging).
+The application is implemented as a **Progressive Web App (PWA)** with the following technologies:
 
-- Native Android (Kotlin)
-  - Language: Kotlin (Recommended)
-  - UI Framework: Jetpack Compose (preferred for modern, scalable UI) or traditional XML/Views.
-  - Architecture: Clean Architecture (MVVM) is encouraged for maintainability.
-  - Data Persistence: Android Room (for SQLite abstraction).
-  - XML Parsing: Standard Android/Kotlin XML libraries (e.g., XmlPullParser, SAX, DOM).
+- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
+- **UI Framework:** Vanilla JavaScript with responsive CSS
+- **Architecture:** Component-based architecture with separation of concerns
+- **Data Persistence:** IndexedDB (browser-native structured storage)
+- **Audio Recording:** Web Audio API with MediaRecorder
+- **XML Parsing:** DOMParser (browser-native XML parsing)
+- **Offline Support:** Service Worker for caching and offline functionality
+- **Export:** JSZip for creating ZIP archives
 
-- Flutter (Dart) – Alternate Option
-  - Language: Dart
-  - UI Framework: Flutter
-  - Architecture: Clean Architecture with BLoC, Riverpod, or Provider.
-  - Data Persistence: sqflite or drift (SQLite abstraction).
-  - XML Parsing: xml (Dart package on pub.dev).
-  - Android Integration Notes: Ensure Android-specific permissions (microphone, storage), file handling, and 16‑bit WAV export conform to the requirements described above.
+### PWA to Android App (TWA)
+
+The PWA can be packaged as an Android app using **Trusted Web Activity (TWA)**:
+
+- **Tool:** Bubblewrap CLI (by Google Chrome Labs)
+- **Process:** Wraps the PWA in a native Android container
+- **Benefits:** Full access to web APIs, automatic updates, smaller package size
+- **Distribution:** Can be published to Google Play Store
+
+See the [PWA_README.md](PWA_README.md) for conversion instructions.
 
 ## Contribution and Development
 

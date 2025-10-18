@@ -7,6 +7,9 @@ audio/*.*
 # But allow test data
 !test_data/
 
+# PWA - Do NOT ignore the www directory (it's the main application now)
+!www/
+
 # macOS specific files
 .DS_Store
 **/.DS_Store
