@@ -1,0 +1,17 @@
+{
+  "name": "quickstart-android-pwa",
+  "private": true,
+  "version": "1.1.0",
+  "description": "Local dev server for the Wordlist Elicitation PWA (serves ./www)",
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "start": "node server.js --open",
+    "start:no-open": "node server.js",
+    "dev:android": "node scripts/dev-android.js",
+    "pull:prompt": "node scripts/pull-from-download.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {}
+}
