@@ -63,3 +63,45 @@ logs
 ### Build artifacts (if any)
 dist/
 build/
+
+### Dart / Flutter
+.dart_tool/
+.packages
+.metadata
+.fvm/
+.flutter-plugins
+.flutter-plugins-dependencies
+**/generated_plugin_registrant.dart
+# Flutter web build artifacts
+**/web/flutter_service_worker.js
+**/web/main.dart.js
+**/web/main.dart.js.map
+# Flutter desktop ephemerals
+**/windows/flutter/ephemeral/
+**/linux/flutter/ephemeral/
+**/macos/Flutter/ephemeral/
+# Flutter iOS ephemerals
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+
+### Android / Gradle / Android Studio
+**/.gradle/
+**/local.properties
+**/captures/
+**/*.iml
+**/.idea/
+**/app/release/
+**/app/profile/
+**/app/debug/
+**/key.properties
+*.jks
+*.keystore
+
+### Java / Kotlin / Eclipse
+*.class
+.classpath
+.project
+.settings/
+.kotlin/
+*.kotlin_module
