@@ -8,5 +8,5 @@ String slugifyGloss(String gloss) {
 String generateAudioFilename(String reference, String gloss) {
   final ref = reference.padLeft(4, '0');
   final slug = slugifyGloss(gloss);
-  return '$ref\_${slug}.wav';
+  return '${ref}_$slug.wav';
 }

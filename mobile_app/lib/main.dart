@@ -1,41 +1,32 @@
 import 'package:flutter/material.dart';
+import 'services/storage_service.dart';
+import 'screens/home_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const StarterApp());
+
+  // Initialize storage service
+  final storageService = StorageService();
+  await storageService.init();
+
+  runApp(WordlistApp(storageService: storageService));
 }
 
-class StarterApp extends StatelessWidget {
-  const StarterApp({super.key});
+class WordlistApp extends StatelessWidget {
+  final StorageService storageService;
+
+  const WordlistApp({super.key, required this.storageService});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Starter App',
+      title: 'Wordlist Elicitation Tool',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2D5BFF)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2196F3)),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: HomeScreen(storageService: storageService),
       debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Starter App')),
-      body: const Center(
-        child: Text(
-          'Hello from the Flutter Android Starter!',
-          style: TextStyle(fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
     );
   }
 }

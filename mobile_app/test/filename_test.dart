@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:mobile_app/utils/filename.dart' as fn;
+import 'package:quickstart_wordlist_app/utils/filename.dart' as fn;
 
 void main() {
   test('slugify trims and sanitizes', () {
