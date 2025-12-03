@@ -89,10 +89,14 @@ class WordlistAPI:
             import urllib.request
             import ssl
             
-            # Create SSL context that doesn't verify certificates (for testing)
-            ctx = ssl.create_default_context()
-            ctx.check_hostname = False
-            ctx.verify_mode = ssl.CERT_NONE
+            # Use default SSL context with certificate verification
+            # Only disable verification for localhost (development)
+            if url.startswith('http://localhost') or url.startswith('http://127.0.0.1'):
+                # Allow HTTP for localhost
+                ctx = None
+            else:
+                # Use secure defaults for all other URLs
+                ctx = ssl.create_default_context()
             
             with urllib.request.urlopen(url, timeout=30, context=ctx) as response:
                 data = response.read()

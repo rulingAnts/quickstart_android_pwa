@@ -3,7 +3,7 @@ import sqlite3
 import os
 from typing import Optional, Dict, Any, List
 from contextlib import contextmanager
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 class StorageManager:
@@ -186,7 +186,7 @@ class StorageManager:
             cursor.execute("""
                 INSERT OR REPLACE INTO audio (filename, data, created_at)
                 VALUES (?, ?, ?)
-            """, (filename, data, datetime.utcnow().isoformat()))
+            """, (filename, data, datetime.now(timezone.utc).isoformat()))
             conn.commit()
     
     def get_audio(self, filename: str) -> Optional[bytes]:

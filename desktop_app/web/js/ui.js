@@ -204,8 +204,10 @@ function displayCurrentEntry() {
     
     updateRecordingStatus('');
     
-    // Save position
-    window.pywebview.api.set_last_position(currentEntryIndex);
+    // Save position (fire and forget, no need to await)
+    window.pywebview.api.set_last_position(currentEntryIndex).catch(err => {
+        console.warn('Failed to save position:', err);
+    });
 }
 
 async function navigateEntry(direction) {
