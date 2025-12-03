@@ -23,4 +23,8 @@ plugins {
     id("org.jetbrains.kotlin.android") version "2.1.0" apply false
 }
 
+// Explicitly set a unique root project name to avoid IDE/Java tooling
+// interpreting multiple Gradle roots with the same default name "android".
+rootProject.name = "mobile_app_android"
+
 include(":app")
