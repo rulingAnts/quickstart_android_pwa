@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordlist Elicitation Tool</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Home Screen -->
+    <div id="home-screen" class="screen active">
+        <header>
+            <h1>Wordlist Elicitation Tool</h1>
+        </header>
+        
+        <main>
+            <div class="hero-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            
+            <div class="stats-card">
+                <div class="stat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                    <span id="total-count">0</span>
+                    <label>Total</label>
+                </div>
+                <div class="stat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span id="completed-count">0</span>
+                    <label>Completed</label>
+                </div>
+                <div class="stat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                    <span id="remaining-count">0</span>
+                    <label>Remaining</label>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button id="import-btn" class="btn primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Import Wordlist
+                </button>
+                <button id="elicitation-btn" class="btn primary" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                        <path d="M2 2l7.586 7.586"></path>
+                        <circle cx="11" cy="11" r="2"></circle>
+                    </svg>
+                    Start Elicitation
+                </button>
+                <button id="export-btn" class="btn primary" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Export Data
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Import Screen -->
+    <div id="import-screen" class="screen">
+        <header>
+            <button id="import-back-btn" class="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </button>
+            <h1>Import Wordlist</h1>
+        </header>
+        
+        <main>
+            <div class="info-box">
+                <p>Select a Dekereke XML wordlist file to import. Supported encodings: UTF-8, UTF-16LE, UTF-16BE.</p>
+            </div>
+            
+            <div class="import-options">
+                <button id="select-file-btn" class="btn primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                        <polyline points="13 2 13 9 20 9"></polyline>
+                    </svg>
+                    Select XML File
+                </button>
+                
+                <div class="divider">or</div>
+                
+                <div class="url-import">
+                    <input type="text" id="url-input" placeholder="https://example.com/wordlist.xml">
+                    <button id="import-url-btn" class="btn secondary">Import from URL</button>
+                </div>
+            </div>
+            
+            <div id="import-status" class="status-message"></div>
+        </main>
+    </div>
+
+    <!-- Elicitation Screen -->
+    <div id="elicitation-screen" class="screen">
+        <header>
+            <button id="elicitation-back-btn" class="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </button>
+            <h1>Elicitation</h1>
+            <button id="all-entries-btn" class="icon-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+            </button>
+        </header>
+        
+        <main>
+            <div class="word-card">
+                <div class="reference" id="word-reference">0001</div>
+                <div class="gloss" id="word-gloss">word</div>
+                
+                <div id="picture-container" class="picture-container" style="display: none;">
+                    <img id="word-picture" src="" alt="Word picture">
+                </div>
+                
+                <div class="transcription-group">
+                    <label for="transcription-input">Local Transcription:</label>
+                    <input type="text" id="transcription-input" placeholder="Enter transcription">
+                </div>
+                
+                <div class="audio-controls">
+                    <button id="record-btn" class="record-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                        <span id="record-text">Record</span>
+                    </button>
+                    
+                    <button id="play-btn" class="play-btn" style="display: none;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        Play
+                    </button>
+                </div>
+                
+                <div id="recording-status" class="status-message"></div>
+            </div>
+            
+            <div class="navigation">
+                <button id="prev-btn" class="nav-btn" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    Previous
+                </button>
+                <span id="word-counter">1 / 1</span>
+                <button id="next-btn" class="nav-btn" disabled>
+                    Next
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </main>
+        
+        <!-- All Entries Panel -->
+        <div id="all-entries-panel" class="panel">
+            <div class="panel-header">
+                <h2>All Entries</h2>
+                <button id="close-panel-btn" class="icon-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <input type="text" id="entry-search" placeholder="Search by reference or gloss...">
+            <div id="entry-list" class="entry-list"></div>
+        </div>
+        <div id="panel-overlay" class="overlay"></div>
+    </div>
+
+    <!-- Export Screen -->
+    <div id="export-screen" class="screen">
+        <header>
+            <button id="export-back-btn" class="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </button>
+            <h1>Export Data</h1>
+        </header>
+        
+        <main>
+            <div class="info-box">
+                <p>Export all collected data as a ZIP archive containing:</p>
+                <ul>
+                    <li>wordlist.xml (UTF-16LE with BOM)</li>
+                    <li>audio/ folder with WAV recordings</li>
+                    <li>consent_log.json (if recorded)</li>
+                    <li>metadata.json</li>
+                </ul>
+            </div>
+            
+            <div class="export-stats">
+                <div class="stat-row">
+                    <span>Total Entries:</span>
+                    <span id="export-total">0</span>
+                </div>
+                <div class="stat-row">
+                    <span>Completed:</span>
+                    <span id="export-completed">0</span>
+                </div>
+                <div class="stat-row">
+                    <span>With Audio:</span>
+                    <span id="export-audio">0</span>
+                </div>
+                <div class="stat-row">
+                    <span>With Transcription:</span>
+                    <span id="export-transcribed">0</span>
+                </div>
+            </div>
+            
+            <button id="export-data-btn" class="btn primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Export ZIP Archive
+            </button>
+            
+            <div id="export-status" class="status-message"></div>
+        </main>
+    </div>
+
+    <script src="js/ui.js"></script>
+</body>
+</html>
