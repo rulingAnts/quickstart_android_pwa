@@ -72,8 +72,8 @@ echo "Waiting for device to boot..."
 # Additional boot completion check (optional, tolerates devices without property)
 BOOT_COMPLETE=0
 for i in {1..30}; do
-  status=$("$ADB_BIN" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
-  if [[ "$status" == "1" ]]; then
+  boot_status=$("$ADB_BIN" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
+  if [[ "$boot_status" == "1" ]]; then
     BOOT_COMPLETE=1
     break
   fi
@@ -86,7 +86,29 @@ else
   echo "Proceeding without sys.boot_completed confirmation (timeout)."
 fi
 
-echo "Running Flutter app..."
+echo "Preparing Flutter run (clearing Gradle config cache, disabling cache, setting JVM opens)..."
+
+# Proactively clear Gradle configuration cache for this project to avoid Java 21 reflective access issues
+rm -rf "$APP_DIR/.gradle/configuration-cache" || true
+rm -rf "$APP_DIR/build/reports/configuration-cache" || true
+
 cd "$APP_DIR"
 flutter pub get
-flutter run
+
+# Ensure Gradle runs without configuration cache and with required JVM opens for Java 21
+export GRADLE_OPTS="--no-configuration-cache"
+export JAVA_TOOL_OPTIONS="--add-opens=java.base/java.lang.ref=ALL-UNNAMED"
+
+echo "Building debug APK via Gradle (no configuration cache)..."
+pushd android >/dev/null
+./gradlew :app:assembleDebug --stacktrace --no-configuration-cache
+popd >/dev/null
+
+APK_PATH="build/app/outputs/apk/debug/app-debug.apk"
+if [[ ! -f "$APK_PATH" ]]; then
+  echo "Error: APK not found at $APK_PATH"
+  exit 1
+fi
+
+echo "Running Flutter with prebuilt APK: $APK_PATH"
+flutter run --use-application-binary "$APK_PATH"
