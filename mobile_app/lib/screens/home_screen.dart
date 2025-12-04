@@ -32,7 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
       final total = await widget.storageService.totalCount();
       final completed = await widget.storageService.completedCount();
       final withAudio = await widget.storageService.withAudioCount();
-      final withTranscription = await widget.storageService.withTranscriptionCount();
+      final withTranscription = await widget.storageService
+          .withTranscriptionCount();
 
       setState(() {
         _totalCount = total;
@@ -44,9 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       setState(() => _isLoading = false);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error loading stats: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error loading stats: $e')));
       }
     }
   }
@@ -221,18 +222,9 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
-          ),
-        ),
+        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
       ],
     );
   }

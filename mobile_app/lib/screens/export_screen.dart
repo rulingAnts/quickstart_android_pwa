@@ -5,7 +5,6 @@ import '../services/storage_service.dart';
 import '../services/xml_service.dart';
 import '../services/audio_service.dart';
 import '../services/export_service.dart';
-import '../models/entry.dart';
 
 class ExportScreen extends StatefulWidget {
   final StorageService storageService;
@@ -43,7 +42,8 @@ class _ExportScreenState extends State<ExportScreen> {
       _totalCount = await widget.storageService.totalCount();
       _completedCount = await widget.storageService.completedCount();
       _withAudioCount = await widget.storageService.withAudioCount();
-      _withTranscriptionCount = await widget.storageService.withTranscriptionCount();
+      _withTranscriptionCount = await widget.storageService
+          .withTranscriptionCount();
 
       setState(() => _isLoading = false);
     } catch (e) {
@@ -135,7 +135,10 @@ class _ExportScreenState extends State<ExportScreen> {
                       padding: const EdgeInsets.all(16),
                       child: Row(
                         children: [
-                          const Icon(Icons.info_outline, color: Color(0xFF1976D2)),
+                          const Icon(
+                            Icons.info_outline,
+                            color: Color(0xFF1976D2),
+                          ),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
@@ -171,7 +174,10 @@ class _ExportScreenState extends State<ExportScreen> {
                           _buildStatRow('Total Entries', _totalCount),
                           _buildStatRow('Completed', _completedCount),
                           _buildStatRow('With Audio', _withAudioCount),
-                          _buildStatRow('With Transcription', _withTranscriptionCount),
+                          _buildStatRow(
+                            'With Transcription',
+                            _withTranscriptionCount,
+                          ),
                         ],
                       ),
                     ),
@@ -190,7 +196,9 @@ class _ExportScreenState extends State<ExportScreen> {
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.download),
-                    label: Text(_isExporting ? 'Exporting...' : 'Export ZIP Archive'),
+                    label: Text(
+                      _isExporting ? 'Exporting...' : 'Export ZIP Archive',
+                    ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(16),
                       backgroundColor: const Color(0xFF4CAF50),
@@ -205,8 +213,8 @@ class _ExportScreenState extends State<ExportScreen> {
                       color: _isError
                           ? const Color(0xFFFFEBEE)
                           : _isExporting
-                              ? const Color(0xFFFFF8E1)
-                              : const Color(0xFFE8F5E9),
+                          ? const Color(0xFFFFF8E1)
+                          : const Color(0xFFE8F5E9),
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Row(
@@ -216,13 +224,13 @@ class _ExportScreenState extends State<ExportScreen> {
                               _isError
                                   ? Icons.error
                                   : _isExporting
-                                      ? Icons.hourglass_empty
-                                      : Icons.check_circle,
+                                  ? Icons.hourglass_empty
+                                  : Icons.check_circle,
                               color: _isError
                                   ? Colors.red
                                   : _isExporting
-                                      ? Colors.orange
-                                      : Colors.green,
+                                  ? Colors.orange
+                                  : Colors.green,
                             ),
                             const SizedBox(width: 12),
                             Expanded(
@@ -232,8 +240,8 @@ class _ExportScreenState extends State<ExportScreen> {
                                   color: _isError
                                       ? Colors.red[800]
                                       : _isExporting
-                                          ? Colors.orange[800]
-                                          : Colors.green[800],
+                                      ? Colors.orange[800]
+                                      : Colors.green[800],
                                 ),
                               ),
                             ),
@@ -253,16 +261,10 @@ class _ExportScreenState extends State<ExportScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            label,
-            style: TextStyle(color: Colors.grey[600]),
-          ),
+          Text(label, style: TextStyle(color: Colors.grey[600])),
           Text(
             value.toString(),
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
         ],
       ),

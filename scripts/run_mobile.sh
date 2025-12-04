@@ -86,22 +86,20 @@ else
   echo "Proceeding without sys.boot_completed confirmation (timeout)."
 fi
 
-echo "Preparing Flutter run (clearing Gradle config cache, disabling cache, setting JVM opens)..."
+echo "Preparing Flutter run (standard Gradle and Flutter commands)..."
 
-# Proactively clear Gradle configuration cache for this project to avoid Java 21 reflective access issues
-rm -rf "$APP_DIR/.gradle/configuration-cache" || true
-rm -rf "$APP_DIR/build/reports/configuration-cache" || true
+# Optional: clear Gradle configuration cache if you suspect cache issues
+# rm -rf "$APP_DIR/.gradle/configuration-cache" || true
+# rm -rf "$APP_DIR/build/reports/configuration-cache" || true
 
 cd "$APP_DIR"
 flutter pub get
 
-# Ensure Gradle runs without configuration cache and with required JVM opens for Java 21
-export GRADLE_OPTS="--no-configuration-cache"
-export JAVA_TOOL_OPTIONS="--add-opens=java.base/java.lang.ref=ALL-UNNAMED"
+# Use defaults; `org.gradle.java.home` in gradle.properties should ensure Java 17.
 
-echo "Building debug APK via Gradle (no configuration cache)..."
+echo "Building debug APK via Gradle..."
 pushd android >/dev/null
-./gradlew :app:assembleDebug --stacktrace --no-configuration-cache
+./gradlew :app:assembleDebug --stacktrace
 popd >/dev/null
 
 APK_PATH="build/app/outputs/apk/debug/app-debug.apk"

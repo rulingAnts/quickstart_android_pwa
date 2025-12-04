@@ -23,7 +23,10 @@ class EncodingUtils {
 
   /// Check if bytes start with UTF-8 BOM
   static bool hasUtf8Bom(Uint8List bytes) {
-    return bytes.length >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF;
+    return bytes.length >= 3 &&
+        bytes[0] == 0xEF &&
+        bytes[1] == 0xBB &&
+        bytes[2] == 0xBF;
   }
 
   /// Prefix bytes with UTF-16LE BOM (FF FE)

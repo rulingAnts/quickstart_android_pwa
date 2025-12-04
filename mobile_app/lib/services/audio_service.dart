@@ -178,7 +178,8 @@ class AudioService {
     if (bitsPerSample != 16) return false;
 
     // Check sample rate (accept 44100 or 48000)
-    final sampleRate = bytes[24] | (bytes[25] << 8) | (bytes[26] << 16) | (bytes[27] << 24);
+    final sampleRate =
+        bytes[24] | (bytes[25] << 8) | (bytes[26] << 16) | (bytes[27] << 24);
     if (sampleRate != 44100 && sampleRate != 48000) return false;
 
     return true;

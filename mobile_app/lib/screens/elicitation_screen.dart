@@ -14,7 +14,8 @@ class ElicitationScreen extends StatefulWidget {
 
 class _ElicitationScreenState extends State<ElicitationScreen> {
   final AudioService _audioService = AudioService();
-  final TextEditingController _transcriptionController = TextEditingController();
+  final TextEditingController _transcriptionController =
+      TextEditingController();
   final TextEditingController _searchController = TextEditingController();
 
   List<Entry> _entries = [];
@@ -53,7 +54,10 @@ class _ElicitationScreenState extends State<ElicitationScreen> {
 
       // Restore last position
       final lastIndex = await widget.storageService.getLastEntryIndex();
-      _currentIndex = lastIndex.clamp(0, _entries.isEmpty ? 0 : _entries.length - 1);
+      _currentIndex = lastIndex.clamp(
+        0,
+        _entries.isEmpty ? 0 : _entries.length - 1,
+      );
 
       // Update transcription field
       if (_entries.isNotEmpty) {
@@ -70,7 +74,8 @@ class _ElicitationScreenState extends State<ElicitationScreen> {
     }
   }
 
-  Entry? get _currentEntry => _entries.isNotEmpty ? _entries[_currentIndex] : null;
+  Entry? get _currentEntry =>
+      _entries.isNotEmpty ? _entries[_currentIndex] : null;
 
   Future<void> _saveCurrentEntry() async {
     final entry = _currentEntry;
@@ -209,10 +214,11 @@ class _ElicitationScreenState extends State<ElicitationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        await _saveCurrentEntry();
-        return true;
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) {
+          await _saveCurrentEntry();
+        }
       },
       child: Scaffold(
         appBar: AppBar(
@@ -231,8 +237,8 @@ class _ElicitationScreenState extends State<ElicitationScreen> {
         body: _isLoading
             ? const Center(child: CircularProgressIndicator())
             : _entries.isEmpty
-                ? const Center(child: Text('No entries to display'))
-                : _buildContent(),
+            ? const Center(child: Text('No entries to display'))
+            : _buildContent(),
       ),
     );
   }
@@ -329,11 +335,11 @@ class _ElicitationScreenState extends State<ElicitationScreen> {
                           color: _isRecording
                               ? Colors.red
                               : _audioSupported
-                                  ? const Color(0xFF4CAF50)
-                                  : Colors.grey,
+                              ? const Color(0xFF4CAF50)
+                              : Colors.grey,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
+                              color: Colors.black.withValues(alpha: 0.2),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
@@ -372,7 +378,7 @@ class _ElicitationScreenState extends State<ElicitationScreen> {
                             color: const Color(0xFF2196F3),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
+                                color: Colors.black.withValues(alpha: 0.2),
                                 blurRadius: 8,
                                 offset: const Offset(0, 4),
                               ),
@@ -399,8 +405,8 @@ class _ElicitationScreenState extends State<ElicitationScreen> {
                         color: _statusMessage.contains('Error')
                             ? Colors.red
                             : _isRecording
-                                ? Colors.orange
-                                : Colors.green,
+                            ? Colors.orange
+                            : Colors.green,
                       ),
                     ),
                   ),
@@ -416,7 +422,7 @@ class _ElicitationScreenState extends State<ElicitationScreen> {
             color: Colors.grey[100],
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 4,
                 offset: const Offset(0, -2),
               ),
@@ -472,7 +478,6 @@ class _AllEntriesPanel extends StatefulWidget {
 
 class _AllEntriesPanelState extends State<_AllEntriesPanel> {
   List<Entry> _filteredEntries = [];
-  String _searchQuery = '';
 
   @override
   void initState() {
@@ -490,7 +495,6 @@ class _AllEntriesPanelState extends State<_AllEntriesPanel> {
   void _onSearchChanged() {
     final query = widget.searchController.text.toLowerCase();
     setState(() {
-      _searchQuery = query;
       if (query.isEmpty) {
         _filteredEntries = widget.entries;
       } else {
@@ -551,8 +555,8 @@ class _AllEntriesPanelState extends State<_AllEntriesPanel> {
                       backgroundColor: isCurrent
                           ? const Color(0xFF2196F3)
                           : entry.isCompleted
-                              ? const Color(0xFF4CAF50)
-                              : Colors.grey[400],
+                          ? const Color(0xFF4CAF50)
+                          : Colors.grey[400],
                       child: Text(
                         entry.reference,
                         style: const TextStyle(
@@ -564,7 +568,9 @@ class _AllEntriesPanelState extends State<_AllEntriesPanel> {
                     title: Text(
                       entry.gloss,
                       style: TextStyle(
-                        fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
+                        fontWeight: isCurrent
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                       ),
                     ),
                     subtitle: Text(

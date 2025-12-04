@@ -5,7 +5,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import '../services/storage_service.dart';
 import '../services/xml_service.dart';
-import '../models/entry.dart';
 
 class ImportScreen extends StatefulWidget {
   final StorageService storageService;
@@ -247,8 +246,8 @@ class _ImportScreenState extends State<ImportScreen> {
                 color: _isError
                     ? const Color(0xFFFFEBEE)
                     : _isLoading
-                        ? const Color(0xFFFFF8E1)
-                        : const Color(0xFFE8F5E9),
+                    ? const Color(0xFFFFF8E1)
+                    : const Color(0xFFE8F5E9),
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Row(
@@ -272,8 +271,8 @@ class _ImportScreenState extends State<ImportScreen> {
                             color: _isError
                                 ? Colors.red[800]
                                 : _isLoading
-                                    ? Colors.orange[800]
-                                    : Colors.green[800],
+                                ? Colors.orange[800]
+                                : Colors.green[800],
                           ),
                         ),
                       ),

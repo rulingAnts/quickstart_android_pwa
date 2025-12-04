@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
 import '../models/entry.dart';
-import '../utils/filename.dart';
 
 class XmlService {
   /// Parse wordlist from a file path or URL
@@ -56,8 +55,10 @@ class XmlService {
 
     // Sort by numeric reference
     entries.sort((a, b) {
-      final aNum = int.tryParse(a.reference.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-      final bNum = int.tryParse(b.reference.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+      final aNum =
+          int.tryParse(a.reference.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+      final bNum =
+          int.tryParse(b.reference.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
       return aNum.compareTo(bNum);
     });
 
@@ -81,7 +82,10 @@ class XmlService {
     }
 
     // Check for UTF-8 BOM (EF BB BF)
-    if (bytes.length >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF) {
+    if (bytes.length >= 3 &&
+        bytes[0] == 0xEF &&
+        bytes[1] == 0xBB &&
+        bytes[2] == 0xBF) {
       return utf8.decode(bytes.sublist(3), allowMalformed: true);
     }
 
@@ -153,7 +157,13 @@ class XmlService {
   /// Find word elements with various tag names
   List<xml.XmlElement> _findWordElements(xml.XmlDocument document) {
     final tagNames = [
-      'Word', 'Entry', 'Item', 'word', 'entry', 'item', 'data_form',
+      'Word',
+      'Entry',
+      'Item',
+      'word',
+      'entry',
+      'item',
+      'data_form',
     ];
 
     for (final tagName in tagNames) {
@@ -169,14 +179,22 @@ class XmlService {
   /// Parse a single word element into an Entry
   Entry? _parseWordElement(xml.XmlElement element, int index) {
     final reference = _getText(element, [
-      'Reference', 'Ref', 'Number', 'reference', 'ref', 'number',
+      'Reference',
+      'Ref',
+      'Number',
+      'reference',
+      'ref',
+      'number',
     ]);
     final gloss = _getText(element, [
-      'Gloss', 'English', 'Word', 'gloss', 'english', 'word',
+      'Gloss',
+      'English',
+      'Word',
+      'gloss',
+      'english',
+      'word',
     ]);
-    final picture = _getText(element, [
-      'Picture', 'Image', 'picture', 'image',
-    ]);
+    final picture = _getText(element, ['Picture', 'Image', 'picture', 'image']);
 
     if (gloss.isEmpty) return null;
 
@@ -232,19 +250,29 @@ class XmlService {
 
     for (final entry in entries) {
       buffer.writeln('  <data_form>');
-      buffer.writeln('    <Reference>${_escapeXml(entry.reference)}</Reference>');
+      buffer.writeln(
+        '    <Reference>${_escapeXml(entry.reference)}</Reference>',
+      );
       buffer.writeln('    <Gloss>${_escapeXml(entry.gloss)}</Gloss>');
       if (entry.localTranscription?.isNotEmpty == true) {
-        buffer.writeln('    <LocalTranscription>${_escapeXml(entry.localTranscription!)}</LocalTranscription>');
+        buffer.writeln(
+          '    <LocalTranscription>${_escapeXml(entry.localTranscription!)}</LocalTranscription>',
+        );
       }
       if (entry.audioFilename != null) {
-        buffer.writeln('    <SoundFile>${_escapeXml(entry.audioFilename!)}</SoundFile>');
+        buffer.writeln(
+          '    <SoundFile>${_escapeXml(entry.audioFilename!)}</SoundFile>',
+        );
       }
       if (entry.pictureFilename != null) {
-        buffer.writeln('    <Picture>${_escapeXml(entry.pictureFilename!)}</Picture>');
+        buffer.writeln(
+          '    <Picture>${_escapeXml(entry.pictureFilename!)}</Picture>',
+        );
       }
       if (entry.recordedAt != null) {
-        buffer.writeln('    <RecordedAt>${_escapeXml(entry.recordedAt!)}</RecordedAt>');
+        buffer.writeln(
+          '    <RecordedAt>${_escapeXml(entry.recordedAt!)}</RecordedAt>',
+        );
       }
       buffer.writeln('  </data_form>');
     }
@@ -274,8 +302,11 @@ class XmlService {
     }
     // Check <?xml follows (< = 0x3C, ? = 0x3F, x = 0x78, m = 0x6D, l = 0x6C)
     // In UTF-16LE: < = 3C 00, ? = 3F 00, x = 78 00, m = 6D 00, l = 6C 00
-    if (bytes[2] != 0x3C || bytes[3] != 0x00 ||  // <
-        bytes[4] != 0x3F || bytes[5] != 0x00) {   // ?
+    if (bytes[2] != 0x3C ||
+        bytes[3] != 0x00 || // <
+        bytes[4] != 0x3F ||
+        bytes[5] != 0x00) {
+      // ?
       throw Exception('<?xml declaration must follow BOM');
     }
   }

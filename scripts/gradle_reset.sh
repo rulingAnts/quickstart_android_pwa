@@ -25,7 +25,7 @@ pushd android >/dev/null
 ./gradlew --stop || true
 
 echo "[gradle_reset] Assembling debug APK with stacktrace..."
-./gradlew :app:assembleDebug --stacktrace --no-configuration-cache
+./gradlew :app:assembleDebug --stacktrace
 popd >/dev/null
 
 echo "[gradle_reset] Done. You can now run: flutter run"

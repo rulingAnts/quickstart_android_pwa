@@ -26,7 +26,8 @@ class StorageService {
     // Calculate next ID from existing entries
     final entries = _entriesBox!.values.toList();
     if (entries.isNotEmpty) {
-      _nextId = entries.map((e) => e.id ?? 0).reduce((a, b) => a > b ? a : b) + 1;
+      _nextId =
+          entries.map((e) => e.id ?? 0).reduce((a, b) => a > b ? a : b) + 1;
     }
   }
 
@@ -54,8 +55,10 @@ class StorageService {
   Future<List<Entry>> getAllEntries() async {
     final entries = _entriesBox?.values.toList() ?? [];
     entries.sort((a, b) {
-      final aNum = int.tryParse(a.reference.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-      final bNum = int.tryParse(b.reference.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+      final aNum =
+          int.tryParse(a.reference.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+      final bNum =
+          int.tryParse(b.reference.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
       return aNum.compareTo(bNum);
     });
     return entries;
@@ -64,7 +67,9 @@ class StorageService {
   /// Update an entry
   Future<void> updateEntry(Entry entry) async {
     if (_entriesBox != null) {
-      final index = _entriesBox!.values.toList().indexWhere((e) => e.id == entry.id);
+      final index = _entriesBox!.values.toList().indexWhere(
+        (e) => e.id == entry.id,
+      );
       if (index >= 0) {
         await _entriesBox!.putAt(index, entry);
       }

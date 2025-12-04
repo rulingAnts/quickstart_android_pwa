@@ -21,11 +21,7 @@ class ExportService {
 
     // 1. Generate wordlist.xml (UTF-16LE with single BOM)
     final xmlBytes = xmlService.generateXmlUtf16leWithBom(entries);
-    archive.addFile(ArchiveFile(
-      'wordlist.xml',
-      xmlBytes.length,
-      xmlBytes,
-    ));
+    archive.addFile(ArchiveFile('wordlist.xml', xmlBytes.length, xmlBytes));
 
     // 2. Add audio files
     final audioFiles = entries
@@ -37,11 +33,7 @@ class ExportService {
     for (final filename in audioFiles) {
       final bytes = await audioService.getAudioBytes(filename);
       if (bytes != null) {
-        archive.addFile(ArchiveFile(
-          'audio/$filename',
-          bytes.length,
-          bytes,
-        ));
+        archive.addFile(ArchiveFile('audio/$filename', bytes.length, bytes));
       }
     }
 
@@ -49,27 +41,20 @@ class ExportService {
     if (consentRecords != null && consentRecords.isNotEmpty) {
       final consentJson = _generateConsentJson(consentRecords);
       final consentBytes = utf8.encode(consentJson);
-      archive.addFile(ArchiveFile(
-        'consent_log.json',
-        consentBytes.length,
-        consentBytes,
-      ));
+      archive.addFile(
+        ArchiveFile('consent_log.json', consentBytes.length, consentBytes),
+      );
     }
 
     // 4. Add metadata.json
     final metadataJson = _generateMetadataJson(entries, appVersion);
     final metadataBytes = utf8.encode(metadataJson);
-    archive.addFile(ArchiveFile(
-      'metadata.json',
-      metadataBytes.length,
-      metadataBytes,
-    ));
+    archive.addFile(
+      ArchiveFile('metadata.json', metadataBytes.length, metadataBytes),
+    );
 
     // 5. Encode as ZIP
     final zipBytes = ZipEncoder().encode(archive);
-    if (zipBytes == null) {
-      throw Exception('Failed to create ZIP archive');
-    }
 
     return Uint8List.fromList(zipBytes);
   }
@@ -105,8 +90,10 @@ class ExportService {
   /// Generate export filename with timestamp
   String generateExportFilename() {
     final now = DateTime.now();
-    final date = '${now.year}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}';
-    final time = '${now.hour.toString().padLeft(2, '0')}${now.minute.toString().padLeft(2, '0')}${now.second.toString().padLeft(2, '0')}';
+    final date =
+        '${now.year}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}';
+    final time =
+        '${now.hour.toString().padLeft(2, '0')}${now.minute.toString().padLeft(2, '0')}${now.second.toString().padLeft(2, '0')}';
     return 'wordlist_export_${date}_$time.zip';
   }
 }
