@@ -1,0 +1,13 @@
+# Wordlist Elicitation Tool - Desktop App Dependencies
+
+# Core UI framework
+pywebview>=4.4
+
+# Audio recording/playback - platform specific
+# macOS and Linux: use sounddevice
+sounddevice>=0.4; platform_system=="Darwin" or platform_system=="Linux"
+# Windows: use PyAudio
+PyAudio>=0.2; platform_system=="Windows"
+
+# Numerical operations for audio processing
+numpy>=1.24
